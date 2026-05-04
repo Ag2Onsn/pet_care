@@ -466,15 +466,24 @@ section {
 }
 
 .store-section-head {
-  display: block;
+  display: flex;
   margin-bottom: 0;
 }
 
 .store-section-head p {
-  margin-top: 18px;
+  margin-top: 0;
+}
+
+.store-layout {
+  display: grid;
+  gap: 34px;
 }
 
 .store-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(330px, 0.75fr);
+  gap: 28px;
+  align-items: start;
   padding: 34px;
   border-radius: 8px;
   background: #fff;
@@ -483,22 +492,32 @@ section {
 }
 
 .store-panel h3 {
+  grid-column: 1 / -1;
   margin: 0 0 20px;
   font-size: 26px;
 }
 
 .store-map {
-  margin-bottom: 26px;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #e6f0f2;
+  background: #eef4f5;
 }
 
 .store-map img {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
+}
+
+.store-details {
+  display: grid;
+  align-content: start;
+}
+
+.store-details .store-row:first-child {
+  padding-top: 0;
+  border-top: 0;
 }
 
 .store-row {
@@ -540,7 +559,7 @@ section {
 
 .visit-fields {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 150px auto;
+  grid-template-columns: minmax(0, 1fr) 136px;
   gap: 12px;
   align-items: end;
 }
@@ -572,6 +591,7 @@ section {
 }
 
 .visit-fields button {
+  grid-column: 1 / -1;
   min-height: 44px;
   padding: 0 18px;
   border: 0;
@@ -709,6 +729,10 @@ section {
     align-items: start;
     flex-direction: column;
   }
+
+  .store-panel {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 640px) {
@@ -774,8 +798,12 @@ section {
     width: 100%;
   }
 
+  .store-panel {
+    padding: 22px;
+  }
+
   .store-map img {
-    min-height: 220px;
+    min-height: 0;
   }
 
   .image-lightbox {
