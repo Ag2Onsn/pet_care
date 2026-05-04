@@ -517,6 +517,84 @@ section {
   color: var(--muted);
 }
 
+.visit-form {
+  margin-top: 8px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.visit-form-head {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.visit-form-head b {
+  color: var(--green);
+}
+
+.visit-form-head span {
+  color: var(--muted);
+}
+
+.visit-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.visit-fields label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.visit-fields input,
+.visit-fields select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  padding: 0 12px;
+}
+
+.visit-fields input:focus,
+.visit-fields select:focus {
+  outline: 3px solid rgba(199, 155, 67, 0.28);
+  border-color: var(--gold);
+}
+
+.visit-fields button {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--green);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.visit-fields button:focus-visible {
+  outline: 3px solid rgba(199, 155, 67, 0.38);
+  outline-offset: 2px;
+}
+
+.visit-note {
+  margin: 14px 0 0;
+  color: var(--green);
+  font-weight: 800;
+}
+
 .footer {
   padding: 36px 0;
   background: #111513;
@@ -685,6 +763,15 @@ section {
   .store-row {
     grid-template-columns: 1fr;
     gap: 4px;
+  }
+
+  .visit-form-head,
+  .visit-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .visit-fields button {
+    width: 100%;
   }
 
   .store-map img {

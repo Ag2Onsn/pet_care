@@ -33,6 +33,9 @@ type Product = (typeof products)[number];
 
 export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [visitDate, setVisitDate] = useState("");
+  const [visitTime, setVisitTime] = useState("10:00");
+  const [visitNote, setVisitNote] = useState("");
 
   useEffect(() => {
     if (!selectedProduct) {
@@ -239,6 +242,56 @@ export default function Home() {
                 <b>服务</b>
                 <span>台球杆、球桌、台呢、配件、维修、球房采购</span>
               </div>
+              <form
+                className="visit-form"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  if (!visitDate) {
+                    setVisitNote("请选择期望到店日期");
+                    return;
+                  }
+
+                  setVisitNote(`已记录期望到店时间：${visitDate} ${visitTime}`);
+                }}
+              >
+                <div className="visit-form-head">
+                  <b>期望到店时间</b>
+                  <span>提前填写，方便到店后更快安排试杆和维护。</span>
+                </div>
+                <div className="visit-fields">
+                  <label>
+                    <span>日期</span>
+                    <input
+                      type="date"
+                      value={visitDate}
+                      onChange={(event) => setVisitDate(event.target.value)}
+                      aria-label="选择期望到店日期"
+                    />
+                  </label>
+                  <label>
+                    <span>时间</span>
+                    <select
+                      value={visitTime}
+                      onChange={(event) => setVisitTime(event.target.value)}
+                      aria-label="选择期望到店时间"
+                    >
+                      <option value="10:00">10:00</option>
+                      <option value="11:00">11:00</option>
+                      <option value="12:00">12:00</option>
+                      <option value="14:00">14:00</option>
+                      <option value="15:00">15:00</option>
+                      <option value="16:00">16:00</option>
+                      <option value="17:00">17:00</option>
+                      <option value="18:00">18:00</option>
+                      <option value="19:00">19:00</option>
+                      <option value="20:00">20:00</option>
+                      <option value="21:00">21:00</option>
+                    </select>
+                  </label>
+                  <button type="submit">确认时间</button>
+                </div>
+                {visitNote && <p className="visit-note">{visitNote}</p>}
+              </form>
             </div>
           </div>
         </section>
