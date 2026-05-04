@@ -31,8 +31,54 @@ const products = [
 
 type Product = (typeof products)[number];
 
+const categories = [
+  {
+    eyebrow: "精准控球",
+    title: "球杆专区",
+    summary: "九球杆、中式黑八杆、跳杆、冲杆与儿童练习杆。",
+    description:
+      "按打法、握距和发力习惯挑选杆重、重心与杆头硬度。店内可试握常用规格，也能根据预算推荐入门练习、进阶训练和比赛备用方案。",
+    fit: "适合刚开始稳定练球、准备升级主杆，或需要冲杆、跳杆补齐打法的玩家。",
+    items: ["枫木与碳纤维前节", "中式黑八与九球规格", "皮头硬度搭配", "杆盒与备用前节"],
+    tone: "cat-green",
+  },
+  {
+    eyebrow: "球房常备",
+    title: "台球配件",
+    summary: "巧粉、皮头、杆盒、手套、三角框、计分牌与清洁工具。",
+    description:
+      "覆盖日常训练和球房运营中的高频耗材，从防滑手套、巧粉到球杆架、计分牌都有现货建议。可按个人使用频率或球房桌数估算补货量。",
+    fit: "适合个人玩家补齐随身装备，也适合俱乐部和球房做周期采购。",
+    items: ["巧粉与皮头耗材", "手套、防滑粉与毛巾", "球框、计分牌与球杆架", "清洁刷与保养液"],
+    tone: "cat-wine",
+  },
+  {
+    eyebrow: "整店配置",
+    title: "球桌台呢",
+    summary: "中式、美式、斯诺克球桌，配套台呢、库边与灯具。",
+    description:
+      "围绕空间尺寸、使用强度和预算规划整桌配置。可协助确认球桌型号、台呢速度、库边弹性、灯具照明和安装调平细节。",
+    fit: "适合家庭娱乐空间、工作室、台球厅新店配置或旧桌升级。",
+    items: ["中式、美式与斯诺克球桌", "快慢速台呢选择", "库边、袋口与灯具", "上门安装与调平"],
+    tone: "cat-blue",
+  },
+  {
+    eyebrow: "稳定出杆",
+    title: "维修保养",
+    summary: "换皮头、修杆头、杆身清洁、球桌调平与台面维护。",
+    description:
+      "针对球杆出杆发涩、皮头开胶、杆头弧度不顺、球桌跑偏等问题做检查和维护。小修可到店处理，球桌类项目建议提前预约。",
+    fit: "适合球杆手感变差、球桌走球不直，或球房需要定期维护的用户。",
+    items: ["更换与修整皮头", "杆身清洁和轻度抛光", "球桌水平检查", "台呢与库边维护"],
+    tone: "cat-charcoal",
+  },
+];
+
+type Category = (typeof categories)[number];
+
 export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category>(categories[0]);
   const [visitDate, setVisitDate] = useState("");
   const [visitTime, setVisitTime] = useState("10:00");
   const [visitNote, setVisitNote] = useState("");
@@ -118,26 +164,45 @@ export default function Home() {
               <p>常用器材按使用场景陈列，适合玩家、俱乐部、球房经营者快速挑选。</p>
             </div>
             <div className="category-grid">
-              <article className="category cat-green">
-                <small>精准控球</small>
-                <h3>球杆专区</h3>
-                <p>九球杆、中式黑八杆、跳杆、冲杆与儿童练习杆。</p>
-              </article>
-              <article className="category cat-wine">
-                <small>球房常备</small>
-                <h3>台球配件</h3>
-                <p>巧粉、皮头、杆盒、手套、三角框、计分牌与清洁工具。</p>
-              </article>
-              <article className="category cat-blue">
-                <small>整店配置</small>
-                <h3>球桌台呢</h3>
-                <p>中式、美式、斯诺克球桌，配套台呢、库边与灯具。</p>
-              </article>
-              <article className="category cat-charcoal">
-                <small>稳定出杆</small>
-                <h3>维修保养</h3>
-                <p>换皮头、修杆头、杆身清洁、球桌调平与台面维护。</p>
-              </article>
+              {categories.map((category) => (
+                <button
+                  className={`category ${category.tone}`}
+                  type="button"
+                  key={category.title}
+                  onClick={() => setSelectedCategory(category)}
+                  aria-pressed={selectedCategory.title === category.title}
+                  aria-controls="category-detail"
+                >
+                  <small>{category.eyebrow}</small>
+                  <h3>{category.title}</h3>
+                  <p>{category.summary}</p>
+                </button>
+              ))}
+            </div>
+            <article className="category-detail" id="category-detail" aria-live="polite">
+              <div className={`category-detail-mark ${selectedCategory.tone}`} aria-hidden="true">
+                {selectedCategory.title.slice(0, 2)}
+              </div>
+              <div className="category-detail-copy">
+                <small>{selectedCategory.eyebrow}</small>
+                <h3>{selectedCategory.title}</h3>
+                <p>{selectedCategory.description}</p>
+                <div className="category-fit">
+                  <b>适合对象</b>
+                  <span>{selectedCategory.fit}</span>
+                </div>
+              </div>
+              <div className="category-detail-list" aria-label={`${selectedCategory.title}包含内容`}>
+                {selectedCategory.items.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+              <a className="category-detail-link" href="#store">
+                咨询此分类
+              </a>
+            </article>
+            <div className="category-hint" aria-hidden="true">
+              点击分类卡片查看具体介绍
             </div>
           </div>
         </section>
